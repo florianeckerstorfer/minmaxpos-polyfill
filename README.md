@@ -36,3 +36,10 @@ Then you can use the new properties in yours CSS:
 ```
 
 If `calc()` returns a negative value, the element will be position at `left: 0px`.
+
+Changelog
+---------
+
+### Version 1.0.0 (4 August 2016)
+
+- Initial release
