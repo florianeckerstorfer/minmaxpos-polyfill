@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>minmaxpos polyfill example</title>
+
+    <script src="node_modules/polyfill/dist/polyfill.js"></script>
+    <script src="dist/minmaxpos.polyfill.js"></script>
+
+    <style type="text/css">
+        .container {
+            background: #ccc;
+            height: 500px;
+            position: absolute;
+            width: 500px;
+            top: 0;
+        }
+
+        .container1 {
+            left: 0;
+        }
+
+        .container2 {
+            left: 550px;
+        }
+
+        .element {
+            position: absolute;
+            width: 300px;
+        }
+
+        .container1 .element {
+            background: red;
+        }
+
+        .container2 .element {
+            background: blue;
+            color: white;
+        }
+
+        .minleft {
+            left: -50px;
+            min-left: 0;
+            top: 20px;
+        }
+
+        .maxleft {
+            left: 500px;
+            max-left: 100px;
+            top: 40px;
+        }
+
+        .minright {
+            right: -50px;
+            min-right: 0;
+            top: 80px;
+        }
+
+        .maxright {
+            right: 400px;
+            max-right: 50px;
+            top: 100px;
+        }
+
+        .mintop {
+            top: 50px;
+            min-top: 140px;
+        }
+
+        .maxtop {
+            top: 500px;
+            max-top: 160px;
+        }
+
+        .minbottom {
+            bottom: 10px;
+            min-bottom:200px;
+        }
+
+        .maxbottom {
+            bottom: 500px;
+            max-bottom:180px;
+        }
+
+        .minleft-pc {
+            left: -50%;
+            min-left: 0;
+            top: 20px;
+        }
+
+        .maxleft-pc {
+            left: 50%;
+            max-left: 100px;
+            top: 40px;
+        }
+
+        .minright-pc {
+            right: -50%;
+            min-right: 0;
+            top: 80px;
+        }
+
+        .maxright-pc {
+            right: 50%;
+            max-right: 50px;
+            top: 100px;
+        }
+
+        .mintop-pc {
+            top: 10%;
+            min-top: 140px;
+        }
+
+        .maxtop-pc {
+            top: 50%;
+            max-top: 160px;
+        }
+
+        .minbottom-pc {
+            bottom: 10%;
+            min-bottom:200px;
+        }
+
+        .maxbottom-pc {
+            bottom: 80%;
+            max-bottom:180px;
+        }
+
+    </style>
+
+    <script>
+        window.onload = function () {
+            MinMaxPosPolyfill();
+
+            window.setTimeout(function () {
+                console.log('remove class');
+                document.querySelector('.container1 .minleft').className = 'element';
+            }, 1000);
+        }
+    </script>
+</head>
+<body>
+
+<div class="container container1">
+    container 1 (pixel values)
+
+    <div class="element minleft">min left</div>
+    <div class="element maxleft">max left</div>
+    <div class="element minright">min right</div>
+    <div class="element maxright">max right</div>
+    <div class="element mintop">min top</div>
+    <div class="element maxtop">max top</div>
+    <div class="element minbottom">min bottom</div>
+    <div class="element maxbottom">max bottom</div>
+</div>
+
+<div class="container container2">
+    container 2 (percent values)
+
+    <div class="element minleft-pc">min left</div>
+    <div class="element maxleft-pc">max left</div>
+    <div class="element minright-pc">min right</div>
+    <div class="element maxright-pc">max right</div>
+    <div class="element mintop-pc">min top</div>
+    <div class="element maxtop-pc">max top</div>
+    <div class="element minbottom-pc">min bottom</div>
+    <div class="element maxbottom-pc">max bottom</div>
+</div>
+
+</body>
+</html>

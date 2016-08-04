@@ -1,0 +1,27 @@
+{
+  "name": "minpos-polyfill",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "node_modules/.bin/babel src/ -o dist/minmaxpos.polyfill.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "babel-cli": "^6.11.4",
+    "babel-preset-es2015": "^6.9.0",
+    "babelify": "^7.3.0",
+    "browserify": "^13.1.0",
+    "jasmine-core": "^2.4.1",
+    "karma": "^1.1.2",
+    "karma-babel-preprocessor": "^6.0.1",
+    "karma-browserify": "^5.1.0",
+    "karma-chrome-launcher": "^1.0.1",
+    "karma-jasmine": "^1.0.2",
+    "watchify": "^3.7.0"
+  },
+  "dependencies": {
+    "polyfill": "git+https://github.com/philipwalton/polyfill.git"
+  }
+}
