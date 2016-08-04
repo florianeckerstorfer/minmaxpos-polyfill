@@ -34,3 +34,5 @@ Then you can use the new properties in yours CSS:
     min-left: 0;
 }
 ```
+
+If `calc()` returns a negative value, the element will be position at `left: 0px`.
