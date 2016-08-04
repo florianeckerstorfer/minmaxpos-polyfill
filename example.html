@@ -83,7 +83,7 @@
         }
 
         .minleft-pc {
-            left: -50%;
+            left: calc(10% - 100px);
             min-left: 0;
             top: 20px;
         }
@@ -129,14 +129,7 @@
     </style>
 
     <script>
-        window.onload = function () {
-            MinMaxPosPolyfill();
-
-            window.setTimeout(function () {
-                console.log('remove class');
-                document.querySelector('.container1 .minleft').className = 'element';
-            }, 1000);
-        }
+        window.onload = MinMaxPosPolyfill;
     </script>
 </head>
 <body>

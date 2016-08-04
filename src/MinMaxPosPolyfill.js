@@ -3,16 +3,18 @@
 import {MinMaxPosCalculator} from './MinMaxPosCalculator';
 
 function MinMaxPosPolyfill() {
-    Polyfill({declarations:[
-        'min-left:*',
-        'max-left:*',
-        'min-right:*',
-        'max-right:*',
-        'min-top:*',
-        'max-top:*',
-        'min-bottom:*',
-        'max-bottom:*'
-    ]})
+    Polyfill({
+        declarations: [
+            'min-left:*',
+            'max-left:*',
+            'min-right:*',
+            'max-right:*',
+            'min-top:*',
+            'max-top:*',
+            'min-bottom:*',
+            'max-bottom:*'
+        ]
+    })
         .doMatched(doMatched)
         .undoUnmatched(undoUnmatched);
 
@@ -37,7 +39,7 @@ function MinMaxPosPolyfill() {
 
     function applyRule(rule, element, property) {
         var calc,
-            operation = property.match(/min/) ? 'max' : 'min',
+            operation        = property.match(/min/) ? 'max' : 'min',
             originalProperty = property.replace(/(min|max)-/, '');
 
         if (originalProperty === 'left' || originalProperty === 'right') {
@@ -48,11 +50,27 @@ function MinMaxPosPolyfill() {
 
         if (rule.getDeclaration()[property]) {
             element.style[originalProperty] = calc[operation](
-                rule.getDeclaration()[originalProperty],
+                offset(element, originalProperty),
                 rule.getDeclaration()[property]
             );
         }
     }
+
+    function offset(element, property) {
+        var relative     = element.parentElement.style.position === 'relative',
+            parentWidth  = relative ? window.innerWidth : element.parentElement.offsetWidth,
+            parentHeight = relative ? window.innerHeight : element.parentElement.offsetHeight;
+
+        if (property === 'left') {
+            return element.offsetLeft;
+        } else if (property === 'top') {
+            return element.offsetTop;
+        } else if (property === 'right') {
+            return parentWidth - (element.offsetLeft + element.offsetWidth);
+        } else if (property === 'bottom') {
+            return parentHeight - (element.offsetTop + element.offsetHeight);
+        }
+    }
 }
 
-export { MinMaxPosPolyfill }
+export {MinMaxPosPolyfill}

@@ -24,11 +24,14 @@ var MinMaxPosCalculator = function () {
     }, {
         key: 'prepareValues',
         value: function prepareValues(a, b) {
-            if (MinMaxPosCalculator.unit(a) !== MinMaxPosCalculator.unit(b)) {
-                if (MinMaxPosCalculator.unit(a) === '%') {
+            var unitA = MinMaxPosCalculator.unit(a) || 'px';
+            var unitB = MinMaxPosCalculator.unit(b) || 'px';
+
+            if (unitA !== unitB) {
+                if (unitA === '%') {
                     a = this.convertPercentToPx(a);
                 }
-                if (MinMaxPosCalculator.unit(b) === '%') {
+                if (unitB === '%') {
                     b = this.convertPercentToPx(b);
                 }
             }
@@ -36,7 +39,7 @@ var MinMaxPosCalculator = function () {
             return {
                 a: parseInt(a),
                 b: parseInt(b),
-                unit: MinMaxPosCalculator.unit(a)
+                unit: unitA
             };
         }
     }, {
@@ -79,7 +82,9 @@ exports.MinMaxPosPolyfill = undefined;
 var _MinMaxPosCalculator = require('./MinMaxPosCalculator');
 
 function MinMaxPosPolyfill() {
-    Polyfill({ declarations: ['min-left:*', 'max-left:*', 'min-right:*', 'max-right:*', 'min-top:*', 'max-top:*', 'min-bottom:*', 'max-bottom:*'] }).doMatched(doMatched).undoUnmatched(undoUnmatched);
+    Polyfill({
+        declarations: ['min-left:*', 'max-left:*', 'min-right:*', 'max-right:*', 'min-top:*', 'max-top:*', 'min-bottom:*', 'max-bottom:*']
+    }).doMatched(doMatched).undoUnmatched(undoUnmatched);
 
     function doMatched(rules) {
         rules.each(function (rule) {
@@ -111,7 +116,23 @@ function MinMaxPosPolyfill() {
         }
 
         if (rule.getDeclaration()[property]) {
-            element.style[originalProperty] = calc[operation](rule.getDeclaration()[originalProperty], rule.getDeclaration()[property]);
+            element.style[originalProperty] = calc[operation](offset(element, originalProperty), rule.getDeclaration()[property]);
+        }
+    }
+
+    function offset(element, property) {
+        var relative = element.parentElement.style.position === 'relative',
+            parentWidth = relative ? window.innerWidth : element.parentElement.offsetWidth,
+            parentHeight = relative ? window.innerHeight : element.parentElement.offsetHeight;
+
+        if (property === 'left') {
+            return element.offsetLeft;
+        } else if (property === 'top') {
+            return element.offsetTop;
+        } else if (property === 'right') {
+            return parentWidth - (element.offsetLeft + element.offsetWidth);
+        } else if (property === 'bottom') {
+            return parentHeight - (element.offsetTop + element.offsetHeight);
         }
     }
 }

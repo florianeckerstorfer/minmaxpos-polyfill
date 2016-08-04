@@ -17,11 +17,14 @@ class MinMaxPosCalculator {
     }
 
     prepareValues(a, b) {
-        if (MinMaxPosCalculator.unit(a) !== MinMaxPosCalculator.unit(b)) {
-            if (MinMaxPosCalculator.unit(a) === '%') {
+        var unitA = MinMaxPosCalculator.unit(a) || 'px';
+        var unitB  = MinMaxPosCalculator.unit(b) || 'px';
+
+        if (unitA !== unitB) {
+            if (unitA === '%') {
                 a = this.convertPercentToPx(a);
             }
-            if (MinMaxPosCalculator.unit(b) === '%') {
+            if (unitB === '%') {
                 b = this.convertPercentToPx(b);
             }
         }
@@ -29,7 +32,7 @@ class MinMaxPosCalculator {
         return {
             a: parseInt(a),
             b: parseInt(b),
-            unit: MinMaxPosCalculator.unit(a)
+            unit: unitA
         }
     }
 
